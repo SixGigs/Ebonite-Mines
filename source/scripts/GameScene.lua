@@ -19,11 +19,15 @@ Z_INDEXES = {
     Pickup = 50
 }
 
+local usePreComputedLevels = not playdate.isSimulator
 
-
-ldtk.load("levels/world.ldtk", false)
+ldtk.load("levels/world.ldtk", usePreComputedLevels)
 
 class('GameScene').extends()
+
+if playdate.isSimulator then
+    ldtk.export_to_lua_files()
+end
 
 function GameScene:init()
     -- The string "Level_0" comes from the name of the LDtk level
