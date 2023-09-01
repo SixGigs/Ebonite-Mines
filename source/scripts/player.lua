@@ -23,7 +23,8 @@ function Player:init(x, y)
     self.xVelocity = 0
     self.yVelocity = 0
     self.gravity = 1.0
-    self.maxSpeed = 2
+    self.maxSpeed = 2.0
+    self.jumpVelocity = -6 -- This number is negative as we are moving up the screen
 
     -- Player State
     self.touchingGround = false
@@ -48,7 +49,11 @@ function Player:handleState()
         self:applyGravity()
         self:handleGroundInput()
     elseif self.currentState == "jump" then
-        
+        if self.touchingGround then
+            self:changeToIdleState()
+        end
+        self:applyGravity()
+        self:handleAirInput()
     end
 end
 
@@ -75,12 +80,22 @@ end
 
 -- Input Helper Functions
 function Player:handleGroundInput()
-    if pd.buttonIsPressed(pd.kButtonLeft) then
+    if pd.buttonJustPressed(pd.kButtonA) then
+        self:changeToJumpState()
+    elseif pd.buttonIsPressed(pd.kButtonLeft) then
         self:changeToRunState("left")
     elseif pd.buttonIsPressed(pd.kButtonRight) then
         self:changeToRunState("right")
     else
         self:changeToIdleState()
+    end
+end
+
+function Player:handleAirInput()
+    if pd.buttonIsPressed(pd.kButtonLeft) then
+        self.xVelocity = -self.maxSpeed
+    elseif pd.buttonIsPressed(pd.kButtonRight) then
+        self.xVelocity = self.maxSpeed
     end
 end
 
@@ -99,6 +114,11 @@ function Player:changeToRunState(direction)
         self.globalFlip = 0
     end
     self:changeState("run")
+end
+
+function Player:changeToJumpState()
+    self.yVelocity = self.jumpVelocity
+    self:changeState("jump")
 end
 
 -- Physics Helper Functions
