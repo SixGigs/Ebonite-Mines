@@ -9,6 +9,7 @@
         "GameScene",
         "Player",
         "Spike",
-        "Spikeball"
+        "Spikeball",
+        "Ability"
     ]
 }
