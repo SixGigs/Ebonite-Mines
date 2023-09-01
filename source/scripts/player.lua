@@ -64,6 +64,13 @@ function Player:handleMovementAndCollisions()
             self.touchingGround = true
         end
     end
+
+    -- Flip the player sprite depending on if they are moving left or right
+    if self.xVelocity < 0 then
+        self.globalFlip = 1
+    elseif self.xVelocity > 0 then
+        self.globalFlip = 0
+    end
 end
 
 -- Input Helper Functions
@@ -86,8 +93,10 @@ end
 function Player:changeToRunState(direction)
     if direction == "left" then
         self.xVelocity = -self.maxSpeed
+        self.globalFlip = 1
     elseif direction == "right" then
         self.xVelocity = self.maxSpeed
+        self.globalFlip = 0
     end
     self:changeState("run")
 end
