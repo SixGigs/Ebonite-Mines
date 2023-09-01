@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 -- version 1.03
 --
 -- Read levels made with LDtk level editor

@@ -1,3 +1,4 @@
+---@diagnostic disable: redundant-parameter, undefined-field
 -----------------------------------------------
 --- Sprite class extension with support of  ---
 --- imagetables and finite state machine,   ---
