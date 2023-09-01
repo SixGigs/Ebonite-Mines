@@ -8,13 +8,15 @@ local ldtk <const> = LDtk
 -- Global Tags "Table" for Storing Information for Collisions
 TAGS = {
     Player = 1,
-    Hazard = 2
+    Hazard = 2,
+    Pickup = 3
 }
 
 -- Global Z Index "Table" for Layers in the Game
 Z_INDEXES = {
     Player = 100,
-    Hazard = 20
+    Hazard = 20,
+    Pickup = 50
 }
 
 
@@ -85,6 +87,8 @@ function GameScene:goToLevel(level_name)
             Spike(entityX, entityY)
         elseif entityName == "Spikeball" then
             Spikeball(entityX, entityY, entity)
+        elseif entityName == "Ability" then
+            Ability(entityX, entityY, entity)
         end
     end
 end
