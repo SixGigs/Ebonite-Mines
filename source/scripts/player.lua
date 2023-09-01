@@ -25,9 +25,13 @@ function Player:init(x, y)
     self.gravity = 1.0
     self.maxSpeed = 2.0
     self.jumpVelocity = -6 -- This number is negative as we are moving up the screen
+    self.drag = 0.1
+    self.minimumAirSpeed = 0.5
 
     -- Player State
     self.touchingGround = false
+    self.touchingCeiling = false
+    self.touchingWall = false
 end
 
 function Player:collisionResponse()
@@ -53,6 +57,7 @@ function Player:handleState()
             self:changeToIdleState()
         end
         self:applyGravity()
+        self:applyDrag(self.drag)
         self:handleAirInput()
     end
 end
@@ -62,11 +67,23 @@ function Player:handleMovementAndCollisions()
 
     -- If we don't touch anything with a Y normal of -1, the player is not on the ground
     self.touchingGround = false
+    self.touchingCeiling = false
+    self.touchingWall = false
+
     for i = 1, length do
+        -- Collision normal for ground is: -1 (on the y axis)
+        -- Collision normal for the ceiling is: 1 (on the y axis)
+        -- Collision normal for wall can being either (on the x axis)
         -- If the player touches anything with a Y normal of -1 (A.k.a: the ground), set touchingGround to true
         local collision = collisions[i]
         if collision.normal.y == -1 then
             self.touchingGround = true
+        elseif collision.normal.y == 1 then
+            self.touchingCeiling = true
+        end
+
+        if collision.normal.x ~= 0 then
+            self.touchingWall = true
         end
     end
 
@@ -124,7 +141,19 @@ end
 -- Physics Helper Functions
 function Player:applyGravity()
     self.yVelocity = self.yVelocity + self.gravity
-    if self.touchingGround then
+    if self.touchingGround or self.touchingCeiling then
         self.yVelocity = 0
+    end
+end
+
+function Player:applyDrag(amount)
+    if self.xVelocity > 0 then
+        self.xVelocity = self.xVelocity - amount
+    elseif self.xVelocity < 0 then
+        self.xVelocity = self.xVelocity + amount
+    end
+
+    if math.abs(self.xVelocity) < self.minimumAirSpeed or self.touchingWall then
+        self.xVelocity = 0
     end
 end
