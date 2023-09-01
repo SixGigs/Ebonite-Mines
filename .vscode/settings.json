@@ -6,6 +6,7 @@
         "AnimatedSprite",
         "json",
         "printTable",
-        "GameScene"
+        "GameScene",
+        "Player"
     ]
 }

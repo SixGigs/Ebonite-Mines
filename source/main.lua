@@ -10,6 +10,7 @@ import "scripts/Libraries/LDtk"
 
 -- My Scripts
 import "scripts/GameScene"
+import "scripts/Player"
 
 -- Create GameScene Object
 GameScene()

@@ -2,6 +2,16 @@
 local gfx <const> = playdate.graphics
 local ldtk <const> = LDtk
 
+-- Global Tags "Table" for Storing Information for Collisions
+TAGS = {
+    Player = 1
+}
+
+-- Global Z Index "Table" for Layers in the Game
+Z_INDEXES = {
+    Player = 100
+}
+
 ldtk.load("levels/world.ldtk", false)
 
 class('GameScene').extends()
@@ -9,6 +19,9 @@ class('GameScene').extends()
 function GameScene:init()
     -- The string "Level_0" comes from the name of the LDtk level
     self:goToLevel("Level_0")
+    self.spawnX = 12 * 16
+    self.spawnY = 5 * 16
+    self.player = Player(self.spawnX, self.spawnY)
 end
 
 function GameScene:goToLevel(level_name)
