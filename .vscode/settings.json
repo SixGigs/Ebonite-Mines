@@ -4,6 +4,7 @@
         "playdate",
         "class",
         "AnimatedSprite",
-        "json"
+        "json",
+        "printTable"
     ]
 }
