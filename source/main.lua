@@ -8,6 +8,12 @@ import "CoreLibs/timer"
 import "scripts/Libraries/AnimatedSprite"
 import "scripts/Libraries/LDtk"
 
+-- My Scripts
+import "scripts/GameScene"
+
+-- Create GameScene Object
+GameScene()
+
 -- Constants
 local pd <const> = playdate
 local gfx <const> = playdate.graphics

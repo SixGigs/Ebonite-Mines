@@ -5,6 +5,7 @@
         "class",
         "AnimatedSprite",
         "json",
-        "printTable"
+        "printTable",
+        "GameScene"
     ]
 }
