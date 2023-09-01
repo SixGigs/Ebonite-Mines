@@ -1,8 +1,11 @@
+-- PlayDate Constants
 local pd <const> = playdate
 local gfx <const> = playdate.graphics
 
+-- Player Class
 class('Player').extends(AnimatedSprite)
 
+-- Initialise the Player Class
 function Player:init(x, y)
     -- Create State Machine
     local playerImageTable = gfx.imagetable.new("images/player-table-16-16")
@@ -34,10 +37,16 @@ function Player:init(x, y)
     self.touchingWall = false
 end
 
+
+
+-- The Default Collision Response is to Slide at the Moment
 function Player:collisionResponse()
     return gfx.sprite.kCollisionTypeSlide
 end
 
+
+
+-- This Method Updates the Player Animation, State, and Collisions
 function Player:update()
     self:updateAnimation()
 
@@ -45,6 +54,9 @@ function Player:update()
     self:handleMovementAndCollisions()
 end
 
+
+
+-- This Method Handles the Player States Set up Using the AnimatedSprite Library
 function Player:handleState()
     if self.currentState == "idle" then
         self:applyGravity()
@@ -56,16 +68,19 @@ function Player:handleState()
         if self.touchingGround then
             self:changeToIdleState()
         end
+
         self:applyGravity()
         self:applyDrag(self.drag)
         self:handleAirInput()
     end
 end
 
+
+
+-- This Method Handles Player Movement With Collisions
 function Player:handleMovementAndCollisions()
     local _, _, collisions, length = self:moveWithCollisions(self.x + self.xVelocity, self.y + self.yVelocity)
 
-    -- If we don't touch anything with a Y normal of -1, the player is not on the ground
     self.touchingGround = false
     self.touchingCeiling = false
     self.touchingWall = false
@@ -95,6 +110,8 @@ function Player:handleMovementAndCollisions()
     end
 end
 
+
+
 -- Input Helper Functions
 function Player:handleGroundInput()
     if pd.buttonJustPressed(pd.kButtonA) then
@@ -108,6 +125,8 @@ function Player:handleGroundInput()
     end
 end
 
+
+
 function Player:handleAirInput()
     if pd.buttonIsPressed(pd.kButtonLeft) then
         self.xVelocity = -self.maxSpeed
@@ -116,11 +135,15 @@ function Player:handleAirInput()
     end
 end
 
+
+
 -- State Transitions
 function Player:changeToIdleState()
     self.xVelocity = 0
     self:changeState("idle")
 end
+
+
 
 function Player:changeToRunState(direction)
     if direction == "left" then
@@ -133,10 +156,14 @@ function Player:changeToRunState(direction)
     self:changeState("run")
 end
 
+
+
 function Player:changeToJumpState()
     self.yVelocity = self.jumpVelocity
     self:changeState("jump")
 end
+
+
 
 -- Physics Helper Functions
 function Player:applyGravity()
@@ -145,6 +172,8 @@ function Player:applyGravity()
         self.yVelocity = 0
     end
 end
+
+
 
 function Player:applyDrag(amount)
     if self.xVelocity > 0 then

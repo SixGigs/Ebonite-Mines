@@ -1,6 +1,9 @@
 ---@diagnostic disable: param-type-mismatch
+
 local gfx <const> = playdate.graphics
 local ldtk <const> = LDtk
+
+
 
 -- Global Tags "Table" for Storing Information for Collisions
 TAGS = {
@@ -11,6 +14,8 @@ TAGS = {
 Z_INDEXES = {
     Player = 100
 }
+
+
 
 ldtk.load("levels/world.ldtk", false)
 
