@@ -15,7 +15,7 @@ import "scripts/Player"
 -- Create GameScene Object
 GameScene()
 
--- Constants
+-- PlayDate Constants
 local pd <const> = playdate
 local gfx <const> = playdate.graphics
 
