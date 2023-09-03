@@ -32,8 +32,8 @@ end
 function GameScene:init()
     -- The string "Level_0" comes from the name of the LDtk level
     self:goToLevel("Level_0")
-    self.spawnX = 6 * 16
-    self.spawnY = 8 * 16
+    self.spawnX = 4 * 16 - 4
+    self.spawnY = 10 * 16
     self.player = Player(self.spawnX, self.spawnY, self)
 end
 
